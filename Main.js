@@ -39,36 +39,44 @@ class Main extends React.Component {
 	render() {
 		return (
 			<View style={styles.wrapper}>
-				<Text style={styles.title}>Tic Tac Toe</Text>
-				<View style={styles.grid}>
-					{[0, 1, 2].map(j => (
-						<View style={styles.row} key={10 * j}>
-							{[3 * j, 3 * j + 1, 3 * j + 2].map(i => (
-								// i -> index of the cell in grid (0, 9)
-								<VrButton
-									key={i}
-									style={getStyles(i)}
-									onClick={() => this.onClick(i)}
-									disabled={this.state.over}
-								>
-									<Text
-										style={[
-											styles.item,
-											{
-												color: this.state.val[i] == "O" ? "white" : "yellow"
-											}
-										]}
-									>
-										{this.state.val[i]}
-									</Text>
-								</VrButton>
-							))}
-						</View>
-					))}
+				<View style={styles.side}>
+					<Text>Room Details and menu options</Text>
 				</View>
-				{this.state.over && (
-					<Text style={styles.title}>{this.state.winner} WON!</Text>
-				)}
+				<View style={styles.main}>
+					<Text style={styles.title}>Tic Tac Toe</Text>
+					<View style={styles.grid}>
+						{[0, 1, 2].map(j => (
+							<View style={styles.row} key={10 * j}>
+								{[3 * j, 3 * j + 1, 3 * j + 2].map(i => (
+									// i -> index of the cell in grid (0, 9)
+									<VrButton
+										key={i}
+										style={getStyles(i)}
+										onClick={() => this.onClick(i)}
+										disabled={this.state.over}
+									>
+										<Text
+											style={[
+												styles.item,
+												{
+													color: this.state.val[i] == "O" ? "white" : "yellow"
+												}
+											]}
+										>
+											{this.state.val[i]}
+										</Text>
+									</VrButton>
+								))}
+							</View>
+						))}
+					</View>
+					{this.state.over && (
+						<Text style={styles.title}>{this.state.winner} WON!</Text>
+					)}
+				</View>
+				<View style={styles.side}>
+					<Text>Current scoreboard</Text>
+				</View>
 			</View>
 		);
 	}

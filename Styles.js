@@ -25,14 +25,26 @@ export const getStyles = index => {
 
 export const styles = StyleSheet.create({
 	wrapper: {
-		width: 500,
+		width: 1000,
 		height: 600,
 		backgroundColor: "rgba(0, 0, 0, 0.5)",
-		borderColor: "#303050",
-		borderWidth: 2,
-		flexDirection: "column",
-		justifyContent: "flex-start",
+		flexDirection: "row",
+		justifyContent: "space-evenly",
 		alignItems: "stretch"
+	},
+	side: {
+		width: 250,
+		height: 600,
+		borderColor: "#303050",
+		borderWidth: 2
+	},
+	main: {
+		width: 400,
+		height: 600,
+		marginRight: 30,
+		marginLeft: 30,
+		borderColor: "#303050",
+		borderWidth: 2
 	},
 	title: {
 		fontSize: 36,

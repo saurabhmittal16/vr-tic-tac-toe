@@ -6,10 +6,7 @@ function init(bundle, parent, options = {}) {
 		...options
 	});
 
-	const centerPanel = new Surface(500, 600, Surface.SurfaceShape.Flat);
-	centerPanel.setAngle(0, 0);
-
-	r360.renderToSurface(r360.createRoot("Main"), centerPanel);
+	r360.renderToSurface(r360.createRoot("Main"), r360.getDefaultSurface());
 
 	// Load the initial environment
 	r360.compositor.setBackground(r360.getAssetURL("360_world.jpg"));
