@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./Styles";
+import { checkWin } from "./Utils";
 
 class Main extends React.Component {
 	constructor(props) {
@@ -8,20 +9,31 @@ class Main extends React.Component {
 		this.state = {
 			val: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
 			userTurn: true,
-			count: 0
+			over: false,
+			winner: null
 		};
 		this.onClick = this.onClick.bind(this);
 	}
 
 	onClick(index) {
-		this.setState(prevState => {
-			prevState.val[index] = prevState.userTurn ? "O" : "X";
-			return {
-				val: prevState.val,
-				userTurn: !prevState.userTurn,
-				count: prevState.count + 1
-			};
-		});
+		if (this.state.val[index] == " ") {
+			this.setState(
+				prevState => {
+					prevState.val[index] = prevState.userTurn ? "O" : "X";
+					return {
+						val: prevState.val,
+						userTurn: !prevState.userTurn
+					};
+				},
+				() => {
+					let res = checkWin(this.state.val);
+					this.setState({
+						over: res != -1,
+						winner: res
+					});
+				}
+			);
+		}
 	}
 
 	render() {
@@ -37,6 +49,7 @@ class Main extends React.Component {
 									key={i}
 									style={getStyles(i)}
 									onClick={() => this.onClick(i)}
+									disabled={this.state.over}
 								>
 									<Text
 										style={[
@@ -53,6 +66,9 @@ class Main extends React.Component {
 						</View>
 					))}
 				</View>
+				{this.state.over && (
+					<Text style={styles.title}>{this.state.winner} WON!</Text>
+				)}
 			</View>
 		);
 	}
