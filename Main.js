@@ -24,6 +24,28 @@ class Main extends React.Component {
 			gameScore: 0
 		};
 		this.onClick = this.onClick.bind(this);
+		this.newGame = this.newGame.bind(this);
+		this.reset = this.reset.bind(this);
+	}
+
+	newGame() {
+		this.setState({
+			val: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+			userTurn: true,
+			over: false,
+			winner: null
+		});
+	}
+
+	reset() {
+		this.setState({
+			val: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+			userTurn: true,
+			over: false,
+			winner: null,
+			yourScore: 0,
+			gameScore: 0
+		});
 	}
 
 	onClick(index) {
@@ -49,11 +71,22 @@ class Main extends React.Component {
 		}
 	}
 
+	getWinnerText() {
+		switch (this.state.winner) {
+			case 0:
+				return "Game Tied";
+			case 1:
+				return "You Won";
+			case 2:
+				return "You Lost";
+		}
+	}
+
 	render() {
 		return (
 			<View style={styles.wrapper}>
 				<View style={styles.side}>
-					<Menu />
+					<Menu reset={this.reset} newGame={this.newGame} />
 				</View>
 				<View style={styles.main}>
 					<Text style={styles.heading}>Tic Tac Toe</Text>
@@ -78,7 +111,7 @@ class Main extends React.Component {
 							</View>
 						))}
 					</View>
-					{this.state.over && <Text style={styles.title}>{this.state.winner} WON!</Text>}
+					{this.state.over && <Text style={styles.result}>{this.getWinnerText()}</Text>}
 				</View>
 				<View style={styles.side}>
 					<Scoreboard your={this.state.yourScore} game={this.state.gameScore} />

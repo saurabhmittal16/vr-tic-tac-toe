@@ -75,6 +75,12 @@ export const styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: 20
 	},
+	result: {
+		fontSize: 36,
+		textAlign: "center",
+		fontWeight: "700",
+		marginTop: 30
+	},
 	title: {
 		fontSize: 36,
 		textAlign: "center",
