@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./src/Styles";
-import { findResult, getWinnerText, minimiser } from "./src/Utils";
+import { findResult, getWinnerText, minimiser, easyMove } from "./src/Utils";
 import Scoreboard from "./src/Scoreboard";
 import Menu from "./src/Menu";
 
@@ -11,6 +11,8 @@ import Menu from "./src/Menu";
 // result = 0 -> Tie
 // result = 1 -> Player won
 // result = 2 -> Game won
+// difficulty = 0 -> Easy (random move)
+// difficulty = 1 -> Hard (perfect move)
 
 class Main extends React.Component {
 	constructor(props) {
@@ -21,19 +23,21 @@ class Main extends React.Component {
 			over: false,
 			winner: null,
 			yourScore: 0,
-			gameScore: 0
+			gameScore: 0,
+			difficulty: 0
 		};
 		this.onClick = this.onClick.bind(this);
 		this.newGame = this.newGame.bind(this);
 		this.reset = this.reset.bind(this);
 	}
 
-	newGame() {
+	newGame(diff) {
 		this.setState({
 			val: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
 			userTurn: true,
 			over: false,
-			winner: null
+			winner: null,
+			difficulty: diff
 		});
 	}
 
@@ -43,6 +47,7 @@ class Main extends React.Component {
 			userTurn: true,
 			over: false,
 			winner: null,
+			difficulty: 0,
 			yourScore: 0,
 			gameScore: 0
 		});
@@ -84,7 +89,12 @@ class Main extends React.Component {
 
 	gameMove() {
 		if (!this.state.over) {
-			const move = minimiser(this.state.val, 0);
+			let move;
+			if (this.state.difficulty == 0) {
+				move = easyMove(this.state.val);
+			} else {
+				move = minimiser(this.state.val, 0);
+			}
 			this.setState(
 				prevState => {
 					prevState.val[move.index] = "X";
@@ -102,7 +112,7 @@ class Main extends React.Component {
 		return (
 			<View style={styles.wrapper}>
 				<View style={styles.side}>
-					<Menu reset={this.reset} newGame={this.newGame} over={this.state.over} />
+					<Menu reset={this.reset} newGame={this.newGame} over={this.state.over} difficulty={this.state.difficulty} />
 				</View>
 				<View style={styles.main}>
 					<Text style={styles.heading}>Tic Tac Toe</Text>

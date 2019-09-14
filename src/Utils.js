@@ -1,3 +1,7 @@
+// result = 0 -> Tie
+// result = 1 -> Player won
+// result = 2 -> Game won
+// result = -1 -> Game not over
 export const findResult = state => {
 	for (let i = 0; i < 9; i += 3) {
 		if (state[i] == state[i + 1] && state[i + 1] == state[i + 2] && state[i] != "") {
@@ -65,11 +69,7 @@ class Move {
 	}
 }
 
-const isEndState = state => {
-	const temp = findResult(state);
-	if (temp == -1) return false;
-	return true;
-};
+const isEndState = state => findResult(state) != -1;
 
 const getScore = (state, depth) => {
 	const res = findResult(state);
@@ -79,6 +79,21 @@ const getScore = (state, depth) => {
 		return depth - 10;
 	}
 	return 0;
+};
+
+// use 100 as placeholder score
+export const easyMove = state => {
+	if (isEndState(state)) {
+		return new Move(100, -1);
+	}
+
+	let possibleMoves = [];
+	for (let i = 0; i < 9; i++) {
+		if (state[i] == " ") possibleMoves.push(i);
+	}
+	let randInd = Math.floor(Math.random() * possibleMoves.length);
+
+	return new Move(100, possibleMoves[randInd]);
 };
 
 export const minimiser = (state, depth) => {
