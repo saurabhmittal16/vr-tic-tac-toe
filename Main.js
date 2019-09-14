@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./src/Styles";
-import { checkWin } from "./src/Utils";
+import { checkWin, getWinnerText } from "./src/Utils";
 import Scoreboard from "./src/Scoreboard";
 import Menu from "./src/Menu";
 
@@ -71,17 +71,6 @@ class Main extends React.Component {
 		}
 	}
 
-	getWinnerText() {
-		switch (this.state.winner) {
-			case 0:
-				return "Game Tied";
-			case 1:
-				return "You Won";
-			case 2:
-				return "You Lost";
-		}
-	}
-
 	render() {
 		return (
 			<View style={styles.wrapper}>
@@ -111,7 +100,7 @@ class Main extends React.Component {
 							</View>
 						))}
 					</View>
-					{this.state.over && <Text style={styles.result}>{this.getWinnerText()}</Text>}
+					{this.state.over && <Text style={styles.result}>{getWinnerText(this.state.winner)}</Text>}
 				</View>
 				<View style={styles.side}>
 					<Scoreboard your={this.state.yourScore} game={this.state.gameScore} />

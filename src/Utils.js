@@ -1,10 +1,6 @@
 export const checkWin = state => {
 	for (let i = 0; i < 9; i += 3) {
-		if (
-			state[i] == state[i + 1] &&
-			state[i + 1] == state[i + 2] &&
-			state[i] != ""
-		) {
+		if (state[i] == state[i + 1] && state[i + 1] == state[i + 2] && state[i] != "") {
 			if (state[i] == "O") {
 				return 1;
 			} else if (state[i] == "X") {
@@ -15,11 +11,7 @@ export const checkWin = state => {
 
 	// Check columns
 	for (let i = 0; i < 3; i++) {
-		if (
-			state[i] == state[i + 3] &&
-			state[i + 3] == state[i + 6] &&
-			state[i] != ""
-		) {
+		if (state[i] == state[i + 3] && state[i + 3] == state[i + 6] && state[i] != "") {
 			if (state[i] == "O") {
 				return 1;
 			} else if (state[i] == "X") {
@@ -53,4 +45,15 @@ export const checkWin = state => {
 
 	// If no empty spaces and no winner then state is tied
 	return 0;
+};
+
+export const getWinnerText = result => {
+	switch (result) {
+		case 0:
+			return "Game Tied";
+		case 1:
+			return "You Won";
+		case 2:
+			return "You Lost";
+	}
 };
