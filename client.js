@@ -7,9 +7,6 @@ function init(bundle, parent, options = {}) {
 	});
 
 	r360.renderToSurface(r360.createRoot("Main"), r360.getDefaultSurface());
-
-	// Load the initial environment
-	r360.compositor.setBackground(r360.getAssetURL("360_world.jpg"));
 }
 
 window.React360 = { init };
