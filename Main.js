@@ -3,6 +3,7 @@ import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./src/Styles";
 import { checkWin } from "./src/Utils";
 import Scoreboard from "./src/Scoreboard";
+import Menu from "./src/Menu";
 
 // 1 Player Game
 // User goes first and uses 'O'
@@ -40,8 +41,8 @@ class Main extends React.Component {
 					this.setState({
 						over: result != -1,
 						winner: result,
-						yourScore: this.state.yourScore + (result == 1 ? 1 : 0),
-						gameScore: this.state.gameScore + (result == 2 ? 1 : 0)
+						yourScore: this.state.yourScore + (result == 1 || result == 0 ? 1 : 0),
+						gameScore: this.state.gameScore + (result == 2 || result == 0 ? 1 : 0)
 					});
 				}
 			);
@@ -52,7 +53,7 @@ class Main extends React.Component {
 		return (
 			<View style={styles.wrapper}>
 				<View style={styles.side}>
-					<Text>Room Details and menu options</Text>
+					<Menu />
 				</View>
 				<View style={styles.main}>
 					<Text style={styles.heading}>Tic Tac Toe</Text>
@@ -61,12 +62,7 @@ class Main extends React.Component {
 							<View style={styles.row} key={10 * j}>
 								{[3 * j, 3 * j + 1, 3 * j + 2].map(i => (
 									// i -> index of the cell in grid (0, 9)
-									<VrButton
-										key={i}
-										style={getStyles(i)}
-										onClick={() => this.onClick(i)}
-										disabled={this.state.over}
-									>
+									<VrButton key={i} style={getStyles(i)} onClick={() => this.onClick(i)} disabled={this.state.over}>
 										<Text
 											style={[
 												styles.item,
@@ -82,9 +78,7 @@ class Main extends React.Component {
 							</View>
 						))}
 					</View>
-					{this.state.over && (
-						<Text style={styles.title}>{this.state.winner} WON!</Text>
-					)}
+					{this.state.over && <Text style={styles.title}>{this.state.winner} WON!</Text>}
 				</View>
 				<View style={styles.side}>
 					<Scoreboard your={this.state.yourScore} game={this.state.gameScore} />

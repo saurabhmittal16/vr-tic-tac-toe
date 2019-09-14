@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
 		width: 250,
 		height: 600,
 		borderColor: "#303050",
-		borderWidth: 2
+		borderWidth: 4
 	},
 	main: {
 		width: 400,
@@ -44,11 +44,29 @@ export const styles = StyleSheet.create({
 		marginRight: 30,
 		marginLeft: 30,
 		borderColor: "#303050",
-		borderWidth: 2
+		borderWidth: 4
 	},
 	scoreboard: {
+		flexDirection: "column"
+	},
+	container: {
 		flexDirection: "column",
-		marginTop: "40%"
+		justifyContent: "center",
+		height: "100%"
+	},
+	buttonRow: {
+		flexDirection: "row",
+		justifyContent: "center",
+		padding: 50
+	},
+	button: {
+		padding: 10,
+		borderColor: "#303050",
+		borderWidth: 3
+	},
+	btnText: {
+		color: "white",
+		fontWeight: "600"
 	},
 	heading: {
 		fontSize: 54,
