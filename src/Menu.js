@@ -6,7 +6,7 @@ const Scoreboard = props => (
 	<View style={styles.container}>
 		<View style={styles.buttonRow}>
 			<VrButton style={styles.button} onClick={props.newGame}>
-				<Text style={styles.btnText}>New Game</Text>
+				<Text style={styles.btnText}>{props.over ? "Play Again" : "New Game"}</Text>
 			</VrButton>
 		</View>
 		<View style={styles.buttonRow}>

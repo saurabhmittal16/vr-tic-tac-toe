@@ -59,22 +59,27 @@ class Main extends React.Component {
 					};
 				},
 				() => {
-					this.checkVictory();
-					this.gameMove();
+					this.checkVictory(this.gameMove.bind(this));
 				}
 			);
 		}
 	}
 
-	checkVictory() {
+	checkVictory(callback) {
 		let result = findResult(this.state.val);
-		console.log(result);
-		this.setState({
-			over: result != -1,
-			winner: result,
-			yourScore: this.state.yourScore + (result == 1 || result == 0 ? 1 : 0),
-			gameScore: this.state.gameScore + (result == 2 || result == 0 ? 1 : 0)
-		});
+		this.setState(
+			{
+				over: result != -1,
+				winner: result,
+				yourScore: this.state.yourScore + (result == 1 || result == 0 ? 1 : 0),
+				gameScore: this.state.gameScore + (result == 2 || result == 0 ? 1 : 0)
+			},
+			() => {
+				if (typeof callback == "function") {
+					setTimeout(callback, 200);
+				}
+			}
+		);
 	}
 
 	gameMove() {
@@ -88,7 +93,7 @@ class Main extends React.Component {
 						userTurn: !prevState.userTurn
 					};
 				},
-				() => this.checkVictory()
+				() => this.checkVictory(null)
 			);
 		}
 	}
@@ -97,7 +102,7 @@ class Main extends React.Component {
 		return (
 			<View style={styles.wrapper}>
 				<View style={styles.side}>
-					<Menu reset={this.reset} newGame={this.newGame} />
+					<Menu reset={this.reset} newGame={this.newGame} over={this.state.over} />
 				</View>
 				<View style={styles.main}>
 					<Text style={styles.heading}>Tic Tac Toe</Text>
@@ -106,7 +111,12 @@ class Main extends React.Component {
 							<View style={styles.row} key={10 * j}>
 								{[3 * j, 3 * j + 1, 3 * j + 2].map(i => (
 									// i -> index of the cell in grid (0, 9)
-									<VrButton key={i} style={getStyles(i)} onClick={() => this.onClick(i)} disabled={this.state.over}>
+									<VrButton
+										key={i}
+										style={getStyles(i)}
+										onClick={() => this.onClick(i)}
+										disabled={this.state.over || !this.state.userTurn}
+									>
 										<Text
 											style={[
 												styles.item,
