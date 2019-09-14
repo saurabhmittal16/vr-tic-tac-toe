@@ -1,9 +1,12 @@
 import React from "react";
-import { Text, View, VrButton } from "react-360";
+import { Text, View, VrButton, asset, NativeModules } from "react-360";
 import { getStyles, styles } from "./src/Styles";
 import { findResult, getWinnerText, minimiser, easyMove } from "./src/Utils";
 import Scoreboard from "./src/Scoreboard";
 import Menu from "./src/Menu";
+import Mute from "./src/Mute";
+
+const { AudioModule } = NativeModules;
 
 // 1 Player Game
 // User goes first and uses 'O'
@@ -24,11 +27,31 @@ class Main extends React.Component {
 			winner: null,
 			yourScore: 0,
 			gameScore: 0,
-			difficulty: 0
+			difficulty: 0,
+			mute: true
 		};
 		this.onClick = this.onClick.bind(this);
 		this.newGame = this.newGame.bind(this);
 		this.reset = this.reset.bind(this);
+		this.handleMute = this.handleMute.bind(this);
+	}
+
+	handleMute() {
+		this.setState(
+			{
+				mute: !this.state.mute
+			},
+			() => {
+				if (!this.state.mute) {
+					AudioModule.playEnvironmental({
+						source: asset("./dreams.mp3"),
+						volume: 0.6
+					});
+				} else {
+					AudioModule.stopEnvironmental();
+				}
+			}
+		);
 	}
 
 	newGame(diff) {
@@ -145,6 +168,7 @@ class Main extends React.Component {
 					{this.state.over && <Text style={styles.result}>{getWinnerText(this.state.winner)}</Text>}
 				</View>
 				<View style={styles.side}>
+					<Mute mute={this.state.mute} handleMute={this.handleMute} />
 					<Scoreboard your={this.state.yourScore} game={this.state.gameScore} />
 				</View>
 			</View>
