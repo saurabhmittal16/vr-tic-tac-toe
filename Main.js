@@ -2,6 +2,14 @@ import React from "react";
 import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./Styles";
 import { checkWin } from "./Utils";
+import Scoreboard from "./Scoreboard";
+
+// 1 Player Game
+// User goes first and uses 'O'
+// Game goes second and uses 'X'
+// result = 0 -> Tie
+// result = 1 -> Player won
+// result = 2 -> Game won
 
 class Main extends React.Component {
 	constructor(props) {
@@ -10,7 +18,9 @@ class Main extends React.Component {
 			val: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
 			userTurn: true,
 			over: false,
-			winner: null
+			winner: null,
+			yourScore: 0,
+			gameScore: 0
 		};
 		this.onClick = this.onClick.bind(this);
 	}
@@ -26,10 +36,12 @@ class Main extends React.Component {
 					};
 				},
 				() => {
-					let res = checkWin(this.state.val);
+					let result = checkWin(this.state.val);
 					this.setState({
-						over: res != -1,
-						winner: res
+						over: result != -1,
+						winner: result,
+						yourScore: this.state.yourScore + (result == 1 ? 1 : 0),
+						gameScore: this.state.gameScore + (result == 2 ? 1 : 0)
 					});
 				}
 			);
@@ -43,7 +55,7 @@ class Main extends React.Component {
 					<Text>Room Details and menu options</Text>
 				</View>
 				<View style={styles.main}>
-					<Text style={styles.title}>Tic Tac Toe</Text>
+					<Text style={styles.heading}>Tic Tac Toe</Text>
 					<View style={styles.grid}>
 						{[0, 1, 2].map(j => (
 							<View style={styles.row} key={10 * j}>
@@ -75,7 +87,7 @@ class Main extends React.Component {
 					)}
 				</View>
 				<View style={styles.side}>
-					<Text>Current scoreboard</Text>
+					<Scoreboard your={this.state.yourScore} game={this.state.gameScore} />
 				</View>
 			</View>
 		);

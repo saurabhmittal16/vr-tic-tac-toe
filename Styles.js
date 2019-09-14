@@ -46,12 +46,25 @@ export const styles = StyleSheet.create({
 		borderColor: "#303050",
 		borderWidth: 2
 	},
+	scoreboard: {
+		flexDirection: "column",
+		marginTop: "40%"
+	},
+	heading: {
+		fontSize: 54,
+		textAlign: "center",
+		fontWeight: "bold",
+		marginTop: 20,
+		marginBottom: 20
+	},
 	title: {
 		fontSize: 36,
 		textAlign: "center",
-		fontWeight: "700",
-		marginBottom: 20,
-		marginTop: 20
+		fontWeight: "700"
+	},
+	subtitle: {
+		fontSize: 54,
+		textAlign: "center"
 	},
 	grid: {
 		marginTop: "11%"
