@@ -45,7 +45,7 @@ class Main extends React.Component {
 				if (!this.state.mute) {
 					AudioModule.playEnvironmental({
 						source: asset("./dreams.mp3"),
-						volume: 0.6
+						volume: 0.5
 					});
 				} else {
 					AudioModule.stopEnvironmental();

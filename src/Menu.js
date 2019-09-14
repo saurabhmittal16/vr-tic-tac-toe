@@ -10,18 +10,18 @@ const Scoreboard = props => (
 					styles.button,
 					{
 						marginRight: 30,
-						backgroundColor: props.difficulty == 0 ? "#11111c" : "transparent"
+						backgroundColor: props.difficulty == 0 ? "#1a1a2b" : "transparent"
 					}
 				]}
 				onClick={() => props.newGame(0)}
 			>
-				<Text style={styles.btnText}>{props.difficulty == 0 && props.over ? "Again" : "Easy"}</Text>
+				<Text style={styles.btnText}>{props.difficulty == 0 && props.over ? "Again?" : "Easy"}</Text>
 			</VrButton>
 			<VrButton
-				style={[styles.button, { backgroundColor: props.difficulty == 1 ? "#11111c" : "transparent" }]}
+				style={[styles.button, { backgroundColor: props.difficulty == 1 ? "#1a1a2b" : "transparent" }]}
 				onClick={() => props.newGame(1)}
 			>
-				<Text style={styles.btnText}>{props.difficulty == 1 && props.over ? "Again" : "Hard"}</Text>
+				<Text style={styles.btnText}>{props.difficulty == 1 && props.over ? "Again?" : "Hard"}</Text>
 			</VrButton>
 		</View>
 		<View style={styles.buttonRow}>
