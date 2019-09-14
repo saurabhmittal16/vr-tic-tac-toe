@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View, VrButton } from "react-360";
-import { getStyles, styles } from "./Styles";
-import { checkWin } from "./Utils";
-import Scoreboard from "./Scoreboard";
+import { getStyles, styles } from "./src/Styles";
+import { checkWin } from "./src/Utils";
+import Scoreboard from "./src/Scoreboard";
 
 // 1 Player Game
 // User goes first and uses 'O'
