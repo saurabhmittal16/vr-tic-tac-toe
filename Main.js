@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, VrButton } from "react-360";
 import { getStyles, styles } from "./src/Styles";
-import { checkWin, getWinnerText } from "./src/Utils";
+import { findResult, getWinnerText, minimiser } from "./src/Utils";
 import Scoreboard from "./src/Scoreboard";
 import Menu from "./src/Menu";
 
@@ -52,21 +52,43 @@ class Main extends React.Component {
 		if (this.state.val[index] == " ") {
 			this.setState(
 				prevState => {
-					prevState.val[index] = prevState.userTurn ? "O" : "X";
+					prevState.val[index] = "O";
 					return {
 						val: prevState.val,
 						userTurn: !prevState.userTurn
 					};
 				},
 				() => {
-					let result = checkWin(this.state.val);
-					this.setState({
-						over: result != -1,
-						winner: result,
-						yourScore: this.state.yourScore + (result == 1 || result == 0 ? 1 : 0),
-						gameScore: this.state.gameScore + (result == 2 || result == 0 ? 1 : 0)
-					});
+					this.checkVictory();
+					this.gameMove();
 				}
+			);
+		}
+	}
+
+	checkVictory() {
+		let result = findResult(this.state.val);
+		console.log(result);
+		this.setState({
+			over: result != -1,
+			winner: result,
+			yourScore: this.state.yourScore + (result == 1 || result == 0 ? 1 : 0),
+			gameScore: this.state.gameScore + (result == 2 || result == 0 ? 1 : 0)
+		});
+	}
+
+	gameMove() {
+		if (!this.state.over) {
+			const move = minimiser(this.state.val, 0);
+			this.setState(
+				prevState => {
+					prevState.val[move.index] = "X";
+					return {
+						val: prevState.val,
+						userTurn: !prevState.userTurn
+					};
+				},
+				() => this.checkVictory()
 			);
 		}
 	}

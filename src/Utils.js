@@ -1,4 +1,4 @@
-export const checkWin = state => {
+export const findResult = state => {
 	for (let i = 0; i < 9; i += 3) {
 		if (state[i] == state[i + 1] && state[i + 1] == state[i + 2] && state[i] != "") {
 			if (state[i] == "O") {
@@ -56,4 +56,71 @@ export const getWinnerText = result => {
 		case 2:
 			return "You Lost";
 	}
+};
+
+class Move {
+	constructor(score, index) {
+		this.score = score;
+		this.index = index;
+	}
+}
+
+const isEndState = state => {
+	const temp = findResult(state);
+	if (temp == -1) return false;
+	return true;
+};
+
+const getScore = (state, depth) => {
+	const res = findResult(state);
+	if (res == 1) {
+		return 10 + depth;
+	} else if (res == 2) {
+		return depth - 10;
+	}
+	return 0;
+};
+
+export const minimiser = (state, depth) => {
+	if (isEndState(state)) {
+		return new Move(getScore(state, depth), -1);
+	}
+
+	const min = new Move(1000, -1);
+	for (let i = 0; i < 9; i++) {
+		if (state[i] == " ") {
+			state[i] = "X";
+
+			const curr = maximiser(state, depth + 1);
+			if (curr.score < min.score) {
+				min.score = curr.score;
+				min.index = i;
+			}
+
+			state[i] = " ";
+		}
+	}
+	return min;
+};
+
+const maximiser = (state, depth) => {
+	if (isEndState(state)) {
+		return new Move(getScore(state, depth), -1);
+	}
+
+	const max = new Move(-1000, -1);
+	for (let i = 0; i < 9; i++) {
+		if (state[i] == " ") {
+			state[i] = "O";
+
+			const curr = minimiser(state, depth + 1);
+			if (curr.score > max.score) {
+				max.score = curr.score;
+				max.index = i;
+			}
+
+			state[i] = " ";
+		}
+	}
+	return max;
 };
