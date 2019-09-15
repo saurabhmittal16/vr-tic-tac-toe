@@ -1,6 +1,6 @@
 # VR Tic Tac Toe
 
-A simple Tic Tac Toe game built for Virtual Reality (Submission for **2019 Developer Ciricles Community Challenge 2019**)
+A simple Tic Tac Toe game built for Virtual Reality (Submission for **2019 Developer Circles Community Challenge**)
 
 ![Screenshot](screenshot/1.png)
 
