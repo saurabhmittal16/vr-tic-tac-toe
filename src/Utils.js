@@ -87,13 +87,22 @@ export const easyMove = state => {
 		return new Move(100, -1);
 	}
 
-	let possibleMoves = [];
-	for (let i = 0; i < 9; i++) {
-		if (state[i] == " ") possibleMoves.push(i);
-	}
-	let randInd = Math.floor(Math.random() * possibleMoves.length);
+	let half = Math.random();
+	let finalMove;
 
-	return new Move(100, possibleMoves[randInd]);
+	if (half > 0.5) {
+		let possibleMoves = [];
+		for (let i = 0; i < 9; i++) {
+			if (state[i] == " ") possibleMoves.push(i);
+		}
+		let randInd = Math.floor(Math.random() * possibleMoves.length);
+
+		finalMove = new Move(100, possibleMoves[randInd]);
+	} else {
+		finalMove = minimiser(state, 0);
+	}
+
+	return finalMove;
 };
 
 export const minimiser = (state, depth) => {
